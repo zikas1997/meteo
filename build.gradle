@@ -1,0 +1,51 @@
+plugins {
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+    id "io.freefair.lombok" version "4.1.6"
+    id "org.springframework.boot" version "2.2.4.RELEASE"
+}
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'war'
+apply plugin: 'io.spring.dependency-management'
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.boot:spring-boot-dependencies:2.1.9.RELEASE")
+    }
+}
+
+dependencies {
+    compile ('org.springframework.boot:spring-boot-starter'){
+        exclude group: 'org.apache.tomcat', module: 'tomcat-jdbc'
+    }
+    implementation ('org.springframework.boot:spring-boot-starter-data-jpa') {
+        exclude group: 'org.hibernate'
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-tomcat'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+    implementation 'postgresql:postgresql:9.1-901.jdbc4'
+    implementation 'org.apache.commons:commons-dbcp2:2.2.0'
+    implementation "org.hibernate:hibernate-core:5.3.1.Final"
+    implementation "org.hibernate:hibernate-java8:5.3.1.Final"
+    implementation "org.hibernate:hibernate-validator:5.3.1.Final"
+
+    implementation "org.apache.poi:poi:3.13"
+    implementation "org.apache.poi:poi-ooxml:3.13"
+    implementation "org.apache.poi:poi-scratchpad:3.13"
+    implementation "org.apache.poi:poi-ooxml-schemas:3.13"
+
+    implementation "jstl:jstl:1.2"
+    implementation "javax.mail:mail:1.4.7"
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
